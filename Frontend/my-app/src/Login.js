@@ -16,6 +16,9 @@ const Login = () => {
     // usestate that point if the user is connect or not
     const [logged, setlogged] = useState(false)
 
+    // usestate to display message when the user do login 
+    const [msg, setmsg] = useState("---")
+
     // use stata for products (in order to display by GET)
     const [products, setproducts] = useState([])
 
@@ -41,11 +44,16 @@ const Login = () => {
         if (myToken)
             setlogged(true)
     }, [myToken]);
+
+      // use Effect : when the user change just then change the msg (that appear at the welcome..)
+    useEffect(() => {
+        if (myToken) setmsg(username);
+    }, [myToken]);
    
     return (
         <div>
             <h4 style={{textAlign: "center" , color: "violet"}}> login:</h4>
-            {logged && 'welcome mr: ' + username}<hr></hr>
+            {logged && 'welcome mr: ' + msg}<hr></hr>
             User name: <input onChange={(e) => setuname(e.target.value)} />
             Password: <input onChange={(e) => setpassword(e.target.value)} />
             <button onClick={() => login()}>Login</button>
